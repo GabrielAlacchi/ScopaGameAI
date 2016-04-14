@@ -1,5 +1,7 @@
 ScopaGameAI/*.sln
 ScopaGameAI/*.vcxproj
 ScopaGameAI/*.vcxproj.filters
+ScopaGameAI/*.sdf
+ScopaGameAI/*.*
 ScopaGameAI/Debug/
 ScopaGameAI/Release/

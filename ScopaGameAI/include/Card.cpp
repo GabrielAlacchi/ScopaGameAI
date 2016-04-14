@@ -8,14 +8,29 @@ Card::Card(int16_t val, Suit suit)
 		throw std::exception("Invalid card value, pick a value between 1 and 10");
 }
 
-const int16_t Card::getVal()
+const int16_t Card::getVal() const
 {
 	return this->val;
 }
 
-const Suit Card::getSuit()
+const Suit Card::getSuit() const
 {
 	return this->suit;
+}
+
+const int16_t Card::getPrimesValue() const
+{
+	// 8, 9, 10 ==> 10
+	// 7 ==> 21
+	// 6 ==> 18
+	// 1 ==> 16
+	// 5,4,3,2 ==> 15,14,13,12
+
+	if (val == 1) return 16;
+	if (val > 5) return 3 * val;
+	
+	return val + 10;
+
 }
 
 void Card::getShuffledDeck(Card input[40])
