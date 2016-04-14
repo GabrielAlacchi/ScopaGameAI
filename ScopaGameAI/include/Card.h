@@ -34,5 +34,7 @@ struct Pickup {
 	int16_t deck_size;
 	Card* pile;
 	int16_t pile_size;
+    Card* leadingCard;
+    int16_t* counts;
 };
 

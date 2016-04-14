@@ -78,10 +78,48 @@ float Model::PickupScore(const Pickup& P)
 	float result = 0;
 	result += alphas[0] * PickupRating(k0, P);
 	
-	int C_of_P_sz;
-	const Pickup* C_of_P = Combinations(P, &C_of_P_sz);
-	for (int i = 0; i < C_of_P_sz; ++i) {
+	int sz1;
+	const Pickup* C_of_P = Combinations(P, &sz1);
+	for (int i = 0; i < sz1; ++i) {
+		const Pickup& P_pr = C_of_P[i];
+	    
+        float sub_result = PickupRating(k1, P_pr) * Probability(P_pr);        
+
+        float loop_result = alphas[1];
+        int sz2;
+        const Pickup* C_of_P_pr = Combinations(P_pr, &sz2);
+        for (int j = 0; j < sz2; ++j) {
+            const Pickup& P_pr2 = C_of_P_pr[j];
+            loop_result -= alphas[2] * PickupRating(k2, P_pr2) * Probability(P_pr2);
+        }
+        
+        sub_result *= loop_result;
+
+        result -= sub_result;
 
 	}
+    
+    return result;
+    
+}
+
+float Model::Probability(const Pickup& P) {
+    int16_t card_val = P.leadingCard->getVal();
+    int16_t m = P.counts[card_val];
+    int16_t n = P.deck_size;
+    int16_t k = P.hand_size;
+
+    //Pr(P) = (n-k)(n-k-1)...(n-m-k+1) / (n(n-1)...(n-m+1)
+ 
+    int16_t numerator;
+    int16_t denominator;
+
+    for (int16_t i = 0; i < m; ++i) {
+        numerator += n - k - i;
+        denominator += n - i;
+    }
+
+    return static_cast<float>(numerator) / static_cast<float>(denominator);
 
 }
+    

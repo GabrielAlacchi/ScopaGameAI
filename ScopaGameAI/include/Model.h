@@ -19,6 +19,7 @@ class Model {
 	static float SunRating(const Pickup& P);
 	static float deltaPrimes(const Pickup& P);
 	static int16_t prime_max(const Card* cards, int sz, Suit suit);
+    static float Probability(const Pickup& P);
 
 public:
 
